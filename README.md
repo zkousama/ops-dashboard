@@ -1,10 +1,15 @@
-# opsguard: ai-driven intrusion prevention system (ips) 🛡️
+# opsguard: ai-driven intrusion prevention system (poc) 🛡️
+
+**disclaimer: this is a proof of concept (poc) designed for educational purposes.**
+it demonstrates the architecture of modern security tools but is **not** intended for production use. it lacks authentication, persistence, and safety checks required for a real-world environment.
+
+---
 
 opsguard is a **microservices-based security platform** that combines real-time observability with machine learning to detect and neutralize system threats automatically.
 
-unlike passive monitoring tools (like grafana), opsguard is an **active defense system**. it uses an unsupervised learning model (isolation forest) to learn "normal" server behavior and automatically triggers counter-measures when anomalies are detected.
+unlike passive monitoring tools (like grafana), opsguard simulates an **active defense system**. it uses an unsupervised learning model (isolation forest) to learn "normal" server behavior and automatically triggers counter-measures when anomalies are detected.
 
-![status](https://img.shields.io/badge/status-active_defense-green)
+![status](https://img.shields.io/badge/status-educational_poc-orange)
 ![docker](https://img.shields.io/badge/docker-containerized-blue)
 ![tech](https://img.shields.io/badge/stack-next.js_16_|_python_3.11_|_prometheus-black)
 
