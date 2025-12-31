@@ -1,5 +1,5 @@
 services:
-  # 1. THE VICTIM (metrics source)
+  # 1. the victim (metrics source)
   node_exporter:
     image: prom/node-exporter:latest
     container_name: ops_exporter
@@ -7,7 +7,7 @@ services:
       - "9100:9100"
     restart: always
 
-  # 2. THE WATCHER (database)
+  # 2. the watcher (database)
   prometheus:
     image: prom/prometheus:latest
     container_name: ops_prometheus
@@ -20,7 +20,7 @@ services:
     depends_on:
       - node_exporter
 
-  # 3. THE BRAIN (python api)
+  # 3. the brain (python api)
   backend:
     build: ./backend
     container_name: ops_brain
@@ -29,15 +29,18 @@ services:
     pid: host
     environment:
       - PROMETHEUS_URL=http://prometheus:9090
+      - API_SECRET=my-super-secret-key-123  # shared secret for the kill switch
     depends_on:
       - prometheus
     volumes:
-      - ./backend:/app              # mirror the local folder to /app inside container
-      - /app/venv                   # don't mirror the venv (keep container's venv)
-      - /app/__pycache__            # don't mirror cache
-    # override the command to use 'reload' for development
+      - ./backend:/app              # mirror local folder for hot reload
+      - /app/venv                   # keep container venv isolated
+      - /app/__pycache__            # ignore cache
+      - ops_brain_data:/app/data    # persist the ai model here
+    # use 'reload' so we see python changes instantly
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
+  # 4. the face (next.js ui)
   frontend:
     build: ./frontend
     container_name: ops_face
@@ -45,11 +48,15 @@ services:
       - "3000:3000"
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_API_SECRET=my-super-secret-key-123 # frontend needs this to authorize requests
     depends_on:
       - backend
     volumes:
-      - ./frontend:/app             # mirror the local folder
-      - /app/node_modules           # don't mirror node_modules (use container's linux version)
-      - /app/.next                  # don't mirror build artifacts
-    # override the command to run the dev server instead of production build
+      - ./frontend:/app             # mirror local folder
+      - /app/node_modules           # keep container node_modules isolated
+      - /app/.next                  # ignore build artifacts
     command: npm run dev
+
+# persist the ai model even if containers crash
+volumes:
+  ops_brain_data:
