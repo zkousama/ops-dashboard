@@ -1,0 +1,18 @@
+# dependencies
+node_modules/
+venv/
+__pycache__/
+.next/
+dist/
+build/
+
+# environment variables
+.env
+.env.local
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# docker volumes (if any mapped locally)
+prometheus_data/

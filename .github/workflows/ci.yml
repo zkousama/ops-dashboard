@@ -1,0 +1,44 @@
+name: CI Pipeline
+
+# trigger the robot whenever code is pushed to the 'main' branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # the robot runs on a linux server in the cloud
+
+    steps:
+      # 1. download the code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. set up docker buildx (the builder tool)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 3. test build backend
+      # if the dockerfile is broken, this step will FAIL
+      - name: Build Backend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: false # we are just testing the build, not uploading it yet
+          tags: ops-dashboard-backend:test
+
+      # 4. test build frontend
+      - name: Build Frontend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: false
+          tags: ops-dashboard-frontend:test
+
+      # 5. success message
+      - name: Echo Success
+        run: echo "✅ Docker images built successfully!"
