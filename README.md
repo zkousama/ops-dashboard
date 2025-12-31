@@ -1,4 +1,4 @@
-# opsguard: ai-driven intrusion prevention system (poc) 🛡️
+# opsguard: ai-driven intrusion prevention system (poc)
 
 **disclaimer: this is a proof of concept (poc) designed for educational purposes.**
 it demonstrates the architecture of modern security tools but is **not** intended for production use. it lacks authentication, persistence, and safety checks required for a real-world environment.
