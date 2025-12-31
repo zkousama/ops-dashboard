@@ -1,77 +1,78 @@
-# OpsGuard: AI-Driven Intrusion Prevention System (IPS) 🛡️
+# opsguard: ai-driven intrusion prevention system (ips) 🛡️
 
-OpsGuard is a **Microservices-based Security Platform** that combines real-time observability with machine learning to detect and neutralize system threats automatically.
+opsguard is a **microservices-based security platform** that combines real-time observability with machine learning to detect and neutralize system threats automatically.
 
-Unlike passive monitoring tools (like Grafana), OpsGuard is an **Active Defense System**. It uses an unsupervised learning model (Isolation Forest) to learn "normal" server behavior and automatically triggers counter-measures when anomalies are detected.
+unlike passive monitoring tools (like grafana), opsguard is an **active defense system**. it uses an unsupervised learning model (isolation forest) to learn "normal" server behavior and automatically triggers counter-measures when anomalies are detected.
 
-![Project Status](https://img.shields.io/badge/Status-Active_Defense-green)
-![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
-![Tech](https://img.shields.io/badge/Stack-Next.js_|_Python_|_Prometheus-black)
+![status](https://img.shields.io/badge/status-active_defense-green)
+![docker](https://img.shields.io/badge/docker-containerized-blue)
+![tech](https://img.shields.io/badge/stack-next.js_16_|_python_3.11_|_prometheus-black)
 
-## 🚀 Key Features
+## 🚀 key features
 
-* **Real-Time Observability:** Pulls live metrics (CPU, RAM) from Prometheus every 2 seconds.
-* **AI Anomaly Detection:** Uses `scikit-learn` (Isolation Forest) to detect zero-day attacks and deviations without labeled data.
-* **Active Mitigation:** Features a "Kill Switch" capability that allows the containerized system to interact with the Host OS kernel to terminate malicious processes.
-* **Full Docker Support:** Entire stack runs in isolated containers with internal networking.
+* **real-time observability:** pulls live metrics (cpu, ram) from prometheus every 2 seconds.
+* **ai anomaly detection:** uses `scikit-learn` (isolation forest) to detect zero-day attacks and deviations without labeled data.
+* **active mitigation:** features a "kill switch" capability that allows the containerized system to interact with the host os kernel to terminate malicious processes.
+* **hot reloading:** docker volumes are set up for instant dev feedback—code changes reflect immediately.
+* **full docker support:** entire stack runs in isolated containers with internal networking.
 
-## 🏗️ Architecture
+## 🏗️ architecture
 
-The system consists of 4 Dockerized microservices:
+the system consists of 4 dockerized microservices:
 
-1.  **The Victim (Node Exporter):** Exposes raw kernel metrics.
-2.  **The Watcher (Prometheus):** Time-series database that scrapes metrics.
-3.  **The Brain (Python/FastAPI):**
-    * Queries Prometheus.
-    * Runs the Isolation Forest model.
-    * Exposes a REST API for the frontend.
-    * **Special Capability:** Runs with `pid: host` to manage host processes.
-4.  **The Face (Next.js 14):**
-    * Real-time dashboard using SWR and Recharts.
-    * Provides the mitigation interface.
+1.  **the victim (node exporter):** exposes raw kernel metrics.
+2.  **the watcher (prometheus):** time-series database that scrapes metrics.
+3.  **the brain (python/fastapi):**
+    * queries prometheus.
+    * runs the isolation forest model.
+    * exposes a rest api for the frontend.
+    * **special capability:** runs with `pid: host` to manage host processes.
+4.  **the face (next.js 16):**
+    * real-time dashboard using swr and recharts.
+    * provides the mitigation interface.
 
-## 🛠️ Tech Stack
+## 🛠️ tech stack
 
-* **Frontend:** Next.js (App Router), TailwindCSS, Recharts, Lucide React.
-* **Backend:** Python 3.11, FastAPI, Scikit-learn, Pandas.
-* **DevOps:** Docker, Docker Compose, Prometheus, Linux Process Management.
+* **frontend:** next.js 16.1 (app router), react 19, tailwindcss v4, recharts, lucide-react.
+* **backend:** python 3.11, fastapi, scikit-learn 1.8, pandas, numpy.
+* **devops:** docker, docker compose, prometheus, linux process management.
 
-## ⚡ Getting Started
+## ⚡ getting started
 
-### Prerequisites
-* Docker & Docker Compose
+### prerequisites
+* docker & docker compose
 
-### Installation
+### installation
 
-1.  Clone the repository:
+1.  clone the repository:
     ```bash
-    git clone [https://github.com/YOUR_USERNAME/ops-guard.git](https://github.com/YOUR_USERNAME/ops-guard.git)
+    git clone [https://github.com/zkousama/ops-guard.git](https://github.com/zkousama/ops-guard.git)
     cd ops-guard
     ```
 
-2.  Launch the stack:
+2.  launch the stack (with hot reload enabled):
     ```bash
     docker-compose up --build -d
     ```
 
-3.  Access the Dashboard:
-    * Open `http://localhost:3000`
+3.  access the dashboard:
+    * open `http://localhost:3000`
 
-### 🧪 How to Test the "Active Defense"
+### 🧪 how to test the "active defense"
 
-1.  **Simulate an Attack:**
-    Run a CPU stress test on your host machine:
+1.  **simulate an attack:**
+    run a cpu stress test on your host machine:
     ```bash
     yes > /dev/null &
     ```
 
-2.  **Observe:**
-    The dashboard will turn **RED** ("THREAT DETECTED") as the AI flags the CPU spike.
+2.  **observe:**
+    the dashboard will turn **red** ("threat detected") as the ai flags the cpu spike.
 
-3.  **Neutralize:**
-    Click the **MITIGATE THREAT** button on the dashboard.
-    * The Python backend will identify the malicious process and kill it.
-    * System status will return to **GREEN**.
+3.  **neutralize:**
+    click the **mitigate threat** button on the dashboard.
+    * the python backend will identify the malicious process and kill it.
+    * system status will return to **green**.
 
-## ⚖️ License
-MIT
+## ⚖️ license
+mit
