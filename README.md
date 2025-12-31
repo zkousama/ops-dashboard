@@ -46,8 +46,8 @@ the system consists of 4 dockerized microservices:
 
 1.  clone the repository:
     ```bash
-    git clone [https://github.com/zkousama/ops-guard.git](https://github.com/zkousama/ops-guard.git)
-    cd ops-guard
+    git clone [https://github.com/zkousama/ops-dashboard.git](https://github.com/zkousama/ops-dashboard.git)
+    cd ops-dashboard
     ```
 
 2.  launch the stack (with hot reload enabled):
